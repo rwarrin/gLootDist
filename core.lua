@@ -7,6 +7,7 @@ local lastupdate = 0;
 local updatefrequency = 1;
 local inprogress = false;
 local currentitemlink = nil;
+local rolltype = "need";
 
 -- Event handling function
 local function OnEvent(self, event, ...)
@@ -20,10 +21,23 @@ end
 local function OnUpdate(self, elapsed)
     lastupdate = lastupdate + elapsed;
     
-    if(lastupdate >= updatefrequency) then
-        lastupdate = 0;
+    if(lastupdate >= updatefrequency) then  
+        if(inprogress == true) then
+            if(COUNT_DOWN_TIMER == 5) then
+                SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID", "COMMON");
+            end
+
+            SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
+            
+            if(COUNT_DOWN_TIMER <= 0) then
+                -- print("ended");
+                inprogress = false;
+            end
+            
+            lastupdate = 0;
+            COUNT_DOWN_TIMER = COUNT_DOWN_TIMER - 1;
+        end
     end
-    
 end
 
 -- Register Events and Set Scripts
@@ -32,10 +46,14 @@ glootframe:SetScript("OnEvent", OnEvent);
 glootframe:SetScript("OnUpdate", OnUpdate);
 
 -- Function to handle arguments from the slash command
-local function CommandHandler(item)
-    if(item ~= nil) then
+local function CommandHandler(msg)
+    if(msg ~= nil) then
+        local type, item = msg:match("^(%S*)%s*(.-)$");
         local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(item);
-        
+        currentitemlink = itemLink;
+        inprogress = true;
+        COUNT_DOWN_TIMER = 5;
+        rolltype = type;
     end
 end
 
