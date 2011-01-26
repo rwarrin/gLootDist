@@ -30,7 +30,6 @@ local function OnUpdate(self, elapsed)
             SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
             
             if(COUNT_DOWN_TIMER <= 0) then
-                -- print("ended");
                 inprogress = false;
             end
             
