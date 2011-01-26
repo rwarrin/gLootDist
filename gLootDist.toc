@@ -1,0 +1,7 @@
+## Interface: 40000
+## Title: gLootDist
+## Author: g0st
+## Notes: Counts down loot rolls because I'm lazy.
+## Version: 0.0.0
+
+core.lua
