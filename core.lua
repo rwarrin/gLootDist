@@ -25,10 +25,12 @@ local function OnUpdate(self, elapsed)
         if(inprogress == true) then
             if(COUNT_DOWN_TIMER == 5) then
                 SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID", "COMMON");
+				--print(string.upper(rolltype) .. " " .. currentitemlink);
             end
-
-            SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
             
+            SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
+			--print(COUNT_DOWN_TIMER .. ". . .");
+			
             if(COUNT_DOWN_TIMER <= 0) then
                 inprogress = false;
             end
@@ -47,13 +49,19 @@ glootframe:SetScript("OnUpdate", OnUpdate);
 -- Function to handle arguments from the slash command
 local function CommandHandler(msg)
     if(msg ~= nil) then
-        local type, item = msg:match("^(%S*)%s*(.-)$");
-        local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(item);
-        currentitemlink = itemLink;
-        inprogress = true;
-        COUNT_DOWN_TIMER = 5;
-        rolltype = type;
-    end
+        local rtype, item = msg:match("^(%S*)%s*(.-)$");
+		if(rtype == nil or item == nil) then
+			print("gLootDist: Usage:  /gloot <rolltype> <item link>");
+		else
+			local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(item);
+			currentitemlink = itemLink;
+			inprogress = true;
+			COUNT_DOWN_TIMER = 5;
+			rolltype = rtype;
+		end
+    else
+		print("gLootDist: Usage:  /gloot <rolltype> <item link>");
+	end
 end
 
 -- Create slash commands
