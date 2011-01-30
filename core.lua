@@ -53,7 +53,7 @@ glootframe:SetScript("OnUpdate", OnUpdate);
 local function CommandHandler(msg)
 	local rtype, item = msg:match("^(%S*)%s*(.-)$");
 	
-	if(rtype == "" or rtype == "help") then
+	if(rtype == "" or rtype == "help" or (rtype ~= "" and item == "")) then
 		print("|cfffff000gLootDist:|r Usage:  /gloot |cffff2b4e<rolltype>|r |cffa335ee<item link>|r");
 	else
 		local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(item);
