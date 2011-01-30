@@ -4,7 +4,7 @@ local COUNT_DOWN_TIMER = 5;
 -- Variables
 local glootframe = CreateFrame("Frame", "glootframe", UIParent);
 local lastupdate = 0;
-local updatefrequency = 1;
+local updatefrequency = 2;
 local inprogress = false;
 local currentitemlink = nil;
 local rolltype = "need";
@@ -24,12 +24,11 @@ local function OnUpdate(self, elapsed)
     if(lastupdate >= updatefrequency) then  
         if(inprogress == true) then
             if(COUNT_DOWN_TIMER == 5) then
-                SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID", "COMMON");
+                SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID_WARNING", "COMMON");
 				--print(string.upper(rolltype) .. " " .. currentitemlink);
             end
-            
-            SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
-			--print(COUNT_DOWN_TIMER .. ". . .");
+
+			SendChatMessage(COUNT_DOWN_TIMER .. ". . .", "RAID", "COMMON");
 			
             if(COUNT_DOWN_TIMER <= 0) then
                 inprogress = false;
