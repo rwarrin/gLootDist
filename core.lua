@@ -32,10 +32,16 @@ local function OnUpdate(self, elapsed)
 				end
             end
 
-			SendChatMessage(countdown .. ". . .", "RAID", "COMMON");
+			if(countdown ~= 0) then
+				SendChatMessage(countdown, "RAID", "COMMON");
+			end
 			
             if(countdown <= 0) then
                 inprogress = false;
+				if(IsRaidLeader() == 1 or IsRaidOfficer() == 1) then
+					SendChatMessage(string.upper(rolltype) .. " ROLL ENDED " .. currentitemlink, "RAID_WARNING", "COMMON");
+				end
+				return;
             end
             
             lastupdate = 0;
