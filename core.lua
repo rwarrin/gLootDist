@@ -24,24 +24,21 @@ local function OnUpdate(self, elapsed)
     
 	if(inprogress == true) then
 		if(lastupdate >= updatefrequency) then  
-            if(countdown == 5) then
+            if(countdown == COUNT_DOWN_TIMER) then
 				if(IsRaidLeader() == 1 or IsRaidOfficer() == 1) then
-					SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID_WARNING", "COMMON");
+					SendChatMessage(string.upper(rolltype) .. ": " .. currentitemlink, "RAID_WARNING", "COMMON");
 				else
-					SendChatMessage(string.upper(rolltype) .. " " .. currentitemlink, "RAID", "COMMON");
+					SendChatMessage(string.upper(rolltype) .. ": " .. currentitemlink, "RAID", "COMMON");
 				end
             end
 
 			if(countdown ~= 0) then
 				SendChatMessage(countdown, "RAID", "COMMON");
-			end
-			
-            if(countdown <= 0) then
+			else
                 inprogress = false;
 				if(IsRaidLeader() == 1 or IsRaidOfficer() == 1) then
-					SendChatMessage(string.upper(rolltype) .. " ROLL ENDED " .. currentitemlink, "RAID_WARNING", "COMMON");
+					SendChatMessage(string.upper(rolltype) .. " ROLL ENDED: " .. currentitemlink, "RAID_WARNING", "COMMON");
 				end
-				return;
             end
             
             lastupdate = 0;
